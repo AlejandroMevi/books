@@ -15,8 +15,11 @@ data class VolumeInfo(
     val title: String,
     val authors: List<String>,
     val description: String,
-    val imageLinks: ImageLinks
-)
+    val imageLinks: ImageLinks,
+    val canonicalVolumeLink: String? = null,
+    val infoLink: String? = null,
+    val previewLink: String? = null
+    )
 
 data class ImageLinks(
     val smallThumbnail: String,

@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         bookMainViewModel.data.observe(this){response ->
             if (response != null) {
                 println(response)
+                println(response.items.size)
             }
         }
     }
