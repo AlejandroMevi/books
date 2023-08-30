@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         Utilities().loadFragment(this,BooksFragment(), "Books")
     }
     private fun buttons() {
-        //binding.callService.setOnClickListener { callService() }
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
@@ -41,10 +40,5 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-    }
-    private fun loadFragment(fragment: Fragment, tag: String) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, fragment, tag)
-            .commit()
     }
 }

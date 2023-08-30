@@ -15,6 +15,12 @@ class BooksFragment : Fragment() {
 
     private lateinit var binding: FragmentBooksBinding
     private val bookMainViewModel: MainViewModel by viewModels()
+    private lateinit var listaBooks: ArrayList<BooksInfo>
+
+    companion object {
+        lateinit var listArrayResponse: ArrayList<BooksInfo>
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         callService()
@@ -36,10 +42,30 @@ class BooksFragment : Fragment() {
             if (response != null) {
                 println(response)
                 println(response.items.size)
+                val list = java.util.ArrayList<BooksInfo>()
+                for (i in response.items.indices) {
+                    val dataModel = BooksInfo()
+                    dataModel.id = response.items[i].id
+                    dataModel.title = response.items[i].volumeInfo.title
+                    dataModel.authors = response.items[i].volumeInfo.authors.toString()
+                    dataModel.description = response.items[i].volumeInfo.description
+                    dataModel.smallThumbnail =
+                        response.items[i].volumeInfo.imageLinks.smallThumbnail
+                    dataModel.thumbnail = response.items[i].volumeInfo.imageLinks.thumbnail
+                    dataModel.canonicalVolumeLink = response.items[i].volumeInfo.canonicalVolumeLink
+                    dataModel.infoLink = response.items[i].volumeInfo.infoLink
+                    dataModel.previewLink = response.items[i].volumeInfo.previewLink
+                    list.add(dataModel)
+                    listArrayResponse = list
+                    listaBooks = listArrayResponse
+                    setDataKardex(listaBooks)
+                }
             }
         }
     }
-
+    private fun setDataKardex(listaUsuarios: ArrayList<BooksInfo>) {
+        binding.listBooks.adapter = ListBooksAdapter(listaUsuarios)
+    }
     private fun statusObserve() {
         bookMainViewModel.status.observe(this) { status ->
             if (status != null) {
