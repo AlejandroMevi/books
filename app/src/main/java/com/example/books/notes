@@ -1,0 +1,40 @@
+Examen Practico
+
+Crear un sistema para buscar libros disponibles en la API de Google Books
+
+Requisitos funcionales
+
+•	Como usuario, me gustaría poder ingresar algunas palabras y ver una lista de libros relacionados con mi búsqueda.
+•	Como usuario, me gustaría poder hacer clic en uno de esos libros para ver en detalle las descripciones del libro.
+•	Como usuario, me gustaría poder marcar un libro como favorito para filtrarlos en el futuro.
+•	Como usuario, quiero utilizar un paginador para acceder al resto de los resultados.
+•	Como usuario, me gustaría poder abrir el sitio en un dispositivo móvil sin comprometer la navegación del sitio.
+•	Como desarrollador, me gustaría realizar pruebas unitarias para garantizar la integridad de lo que se está desarrollando.
+
+
+Requisitos no funcionales
+
+•	Debes utilizar Android con Kotlin.
+•	Intenta reutilizar la mayor cantidad de código posible.
+•	Para las pruebas, utiliza la herramienta que desees, como JUnit o Espresso.
+•	Siéntete libre de utilizar Jetpack.
+•	Presenta el proyecto en el emulador de Android.
+•	Realiza commits (git) constantemente de acuerdo con el progreso de las actividades.
+
+Enlaces relacionados
+•	API Google Books - https://developers.google.com/books/
+•	GitHub - https://github.com/
+
+Entrega
+
+•	La entrega debe realizarse en un repositorio en GitHub.
+
+Criterios de evaluación
+
+•	Comprensión de los requisitos.
+•	Familiaridad con la herramienta utilizada.
+•	Pruebas unitarias.
+•	Estructura de archivos.
+•	Estándares de codificación.
+•	Utilización de buenas prácticas.
+
