@@ -57,10 +57,11 @@ class FavFragment : Fragment(), ListBooksFavsAdapter.OnClickListener {
     }
     private fun loadSharedPreference() {
         val sharedPreferences = requireActivity().getSharedPreferences("mi_pref", Context.MODE_PRIVATE)
+
         val librosSeleccionadosJson = sharedPreferences.getString("libros_seleccionados", "")
-        val librosSeleccionados = librosSeleccionadosJson?.let { Utilities().convertirDesdeJson(it) }
+        if (!librosSeleccionadosJson.isNullOrEmpty()) {
+        val librosSeleccionados = librosSeleccionadosJson.let { Utilities().convertirDesdeJson(it) }
         val list = ArrayList<BooksFav>()
-        if (librosSeleccionados != null) {
             for (i in librosSeleccionados.indices) {
                 val dataModel = BooksFav()
                 dataModel.title = librosSeleccionados[i].title
@@ -72,6 +73,9 @@ class FavFragment : Fragment(), ListBooksFavsAdapter.OnClickListener {
                 listaBooks = list
                 setDataKardex(listaBooks)
             }
+        }
+        else{
+            println("Null")
         }
     }
     private fun setDataKardex(listaUsuarios: ArrayList<BooksFav>) {

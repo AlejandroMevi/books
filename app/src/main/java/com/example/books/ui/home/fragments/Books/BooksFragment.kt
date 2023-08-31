@@ -76,9 +76,13 @@ class BooksFragment : Fragment(), ListBooksAdapter.OnClickListener {
     private fun searchBook() {
         binding.etFilter.doOnTextChanged { text, _, _, _ ->
             if (!text.isNullOrEmpty()) {
+                pages = 1
+                binding.numPage.text = pages.toString()
                 querySave = text.toString()
                 callService(querySave, startIndex, maxResults)
             } else {
+                pages = 1
+                binding.numPage.text = pages.toString()
                 querySave = "a"
                 callService(querySave, startIndex, maxResults)
             }
