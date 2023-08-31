@@ -54,7 +54,7 @@ class ListBooksAdapter
             Glide.with(context)
                 .load(httpsUrl)
                 .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.book)
+                .error(R.drawable.ic_launcher_background)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView)
 
