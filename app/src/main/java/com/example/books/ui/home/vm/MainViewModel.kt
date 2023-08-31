@@ -18,11 +18,15 @@ class MainViewModel : ViewModel() {
     var data = MutableLiveData<BooksResponse?>(null)
         private set
 
-    fun getBooks(search: String){
+    fun getBooks(
+        search: String,
+        startIndex: Int,
+        maxResults: Int
+    ) {
         viewModelScope.launch {
             status.value = ApiResponceStatus.Loading()
-            val responce = respository.search(search)
-            if (responce is ApiResponceStatus.Success){
+            val responce = respository.search(search, startIndex, maxResults)
+            if (responce is ApiResponceStatus.Success) {
                 data.value = responce.data
             }
             status.value = responce as ApiResponceStatus<Any>

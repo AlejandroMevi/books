@@ -9,9 +9,14 @@ class BooksService {
 
     val autservice = RetrofitConnection().getRetrofit()
 
-    suspend fun search(search: String): ApiResponceStatus<BooksResponse> {
+    suspend fun search(
+        search: String,
+        startIndex: Int,
+        maxResults: Int
+    ): ApiResponceStatus<BooksResponse> {
         return makeNetworkCall {
-            val response = autservice.create(BooksApiClient::class.java).searchBooks(search)
+            val response = autservice.create(BooksApiClient::class.java)
+                .searchBooks(search, startIndex, maxResults)
             //evaluateResponce(response.codigo.toString())
             response
         }

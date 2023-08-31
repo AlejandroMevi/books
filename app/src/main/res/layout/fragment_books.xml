@@ -1,15 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/principal"
+    android:background="@color/white"
     tools:context=".ui.home.BooksFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressIndicator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        app:indicatorColor="@color/progress"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listBooks"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/pages"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/list_books" />
+
+    <LinearLayout
+        android:id="@+id/pages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/leftArrow"
+            style="@style/Widget.Material3.Button.IconButton.Outlined"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:icon="@drawable/ic_arrow_left"
+            app:iconGravity="textStart"
+            app:strokeColor="@color/pages" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/numPage"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bacground_border_redon"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_marginHorizontal="@dimen/margin_extra_large"
+            android:text="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/rightArrow"
+            style="@style/Widget.Material3.Button.IconButton.Outlined"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:icon="@drawable/ic_arrow_right"
+            app:iconGravity="textStart"
+            app:strokeColor="@color/pages" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
