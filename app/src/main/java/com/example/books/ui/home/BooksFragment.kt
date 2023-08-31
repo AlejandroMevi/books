@@ -47,7 +47,7 @@ class BooksFragment : Fragment() {
                     val dataModel = BooksInfo()
                     dataModel.id = response.items[i].id
                     dataModel.title = response.items[i].volumeInfo.title
-                    dataModel.authors = response.items[i].volumeInfo.authors.toString()
+                    dataModel.authors = response.items[i].volumeInfo.authors
                     dataModel.description = response.items[i].volumeInfo.description
                     dataModel.smallThumbnail =
                         response.items[i].volumeInfo.imageLinks.smallThumbnail

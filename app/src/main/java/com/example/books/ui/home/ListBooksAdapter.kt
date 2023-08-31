@@ -14,8 +14,7 @@ import com.example.books.databinding.ListBooksBinding
 class ListBooksAdapter
     (private val item: List<BooksInfo>) : RecyclerView.Adapter<ViewHolderGeneral<*>>() {
     companion object {
-        var listSolicitudSelect = MutableLiveData<List<Long>>()
-        val solicitudesSelect = mutableListOf<Long>()
+        var bookSelect = MutableLiveData<List<Long>>()
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderGeneral<*> {
         val itemBinding = ListBooksBinding.inflate(
@@ -42,12 +41,10 @@ class ListBooksAdapter
     override fun getItemCount(): Int = item.size
     private inner class ViewHolder(val binding: ListBooksBinding, val context: Context) : ViewHolderGeneral<BooksInfo>(binding.root) {
         override fun bind(item: BooksInfo) {
-            val grupo = item.authors
-            val secuencia = item.description
-            val fechaInicio = item.previewLink
-            binding.tvGrupo.text = grupo
-            binding.tvSecuencia.text = secuencia
-            binding.tvFechaInicio.text = fechaInicio
+            val autor = item.authors
+            val titulo = item.title
+            binding.titleBook.text = titulo
+            binding.titleAutor.text = autor.toString()
             /*
             binding.cbAutorizar.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
