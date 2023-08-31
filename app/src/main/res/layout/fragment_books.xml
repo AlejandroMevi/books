@@ -7,6 +7,17 @@
     android:background="@color/white"
     tools:context=".ui.home.BooksFragment">
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:indicatorColor="@color/progress"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listBooks"
         android:layout_width="0dp"
@@ -36,7 +47,7 @@
             android:layout_height="35dp"
             app:icon="@drawable/ic_arrow_left"
             app:iconGravity="textStart"
-            app:strokeColor="@color/principal" />
+            app:strokeColor="@color/pages" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/numPage"
@@ -55,7 +66,7 @@
             android:layout_height="35dp"
             app:icon="@drawable/ic_arrow_right"
             app:iconGravity="textStart"
-            app:strokeColor="@color/principal" />
+            app:strokeColor="@color/pages" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

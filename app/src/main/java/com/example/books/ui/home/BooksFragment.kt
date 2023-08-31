@@ -19,6 +19,8 @@ class BooksFragment : Fragment() {
     private lateinit var listaBooks: ArrayList<BooksInfo>
     private var startIndex = 0
     private var maxResults = 10
+    private var pages = 1
+
 
     companion object {
         lateinit var listArrayResponse: ArrayList<BooksInfo>
@@ -42,6 +44,7 @@ class BooksFragment : Fragment() {
 
     private fun initiView() {
         binding.leftArrow.isVisible = false
+        binding.numPage.text = pages.toString()
         startIndex = maxResults
         maxResults += 10
     }
@@ -49,11 +52,15 @@ class BooksFragment : Fragment() {
     private fun buttons() {
         binding.rightArrow.setOnClickListener {
             startIndex += 10;maxResults += 10
+            pages += 1
+            binding.numPage.text = pages.toString()
             binding.leftArrow.isVisible = startIndex >= 10
             callService(startIndex, maxResults)
         }
         binding.leftArrow.setOnClickListener {
             startIndex -= 10;maxResults -= 10
+            pages -= 1
+            binding.numPage.text = pages.toString()
             binding.leftArrow.isVisible = startIndex > 10
             callService(startIndex, maxResults)
         }
@@ -97,7 +104,7 @@ class BooksFragment : Fragment() {
             if (status != null) {
                 when (status) {
                     is ApiResponceStatus.Loading -> {
-                        Toast.makeText(requireActivity(), "Cargando", Toast.LENGTH_SHORT).show()
+                        binding.progressIndicator.isVisible = true
                     }
 
                     is ApiResponceStatus.Success -> {
@@ -117,7 +124,7 @@ class BooksFragment : Fragment() {
     private fun clearService() {
         bookMainViewModel.status.removeObservers(viewLifecycleOwner)
         bookMainViewModel.status.value = null
-
+        binding.progressIndicator.isVisible = false
     }
 
 }
