@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.example.books.R
 import com.example.books.core.Utilities
 import com.example.books.databinding.FragmentFavBinding
@@ -60,7 +61,9 @@ class FavFragment : Fragment(), ListBooksFavsAdapter.OnClickListener {
 
         val librosSeleccionadosJson = sharedPreferences.getString("libros_seleccionados", "")
         if (!librosSeleccionadosJson.isNullOrEmpty()) {
-        val librosSeleccionados = librosSeleccionadosJson.let { Utilities().convertirDesdeJson(it) }
+            binding.listBooks.isVisible = true
+            binding.frame.isVisible = false
+            val librosSeleccionados = librosSeleccionadosJson.let { Utilities().convertirDesdeJson(it) }
         val list = ArrayList<BooksFav>()
             for (i in librosSeleccionados.indices) {
                 val dataModel = BooksFav()
@@ -75,7 +78,8 @@ class FavFragment : Fragment(), ListBooksFavsAdapter.OnClickListener {
             }
         }
         else{
-            println("Null")
+            binding.frame.isVisible = true
+            binding.listBooks.isVisible = false
         }
     }
     private fun setDataKardex(listaUsuarios: ArrayList<BooksFav>) {
