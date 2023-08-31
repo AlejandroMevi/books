@@ -16,6 +16,8 @@ class BooksFragment : Fragment() {
     private lateinit var binding: FragmentBooksBinding
     private val bookMainViewModel: MainViewModel by viewModels()
     private lateinit var listaBooks: ArrayList<BooksInfo>
+    private var startIndex = 0
+    private var maxResults = 10
 
     companion object {
         lateinit var listArrayResponse: ArrayList<BooksInfo>
@@ -36,7 +38,7 @@ class BooksFragment : Fragment() {
     }
 
     private fun callService() {
-        bookMainViewModel.getBooks("a")
+        bookMainViewModel.getBooks("a", startIndex, maxResults)
         statusObserve()
         bookMainViewModel.data.observe(this) { response ->
             if (response != null) {
@@ -63,9 +65,11 @@ class BooksFragment : Fragment() {
             }
         }
     }
+
     private fun setDataKardex(listaUsuarios: ArrayList<BooksInfo>) {
         binding.listBooks.adapter = ListBooksAdapter(listaUsuarios)
     }
+
     private fun statusObserve() {
         bookMainViewModel.status.observe(this) { status ->
             if (status != null) {
