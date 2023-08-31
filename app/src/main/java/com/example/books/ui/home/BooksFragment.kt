@@ -18,7 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.card.MaterialCardView
 
 
-class BooksFragment : Fragment(), ListBooksAdapter.OnClickListener{
+class BooksFragment : Fragment(), ListBooksAdapter.OnClickListener {
 
     private lateinit var binding: FragmentBooksBinding
     private val bookMainViewModel: MainViewModel by viewModels()
@@ -43,7 +43,7 @@ class BooksFragment : Fragment(), ListBooksAdapter.OnClickListener{
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentBooksBinding.inflate(inflater, container, false)
-        callService(querySave,startIndex, maxResults)
+        callService(querySave, startIndex, maxResults)
         initiView()
         buttons()
         searchBook()
@@ -63,14 +63,14 @@ class BooksFragment : Fragment(), ListBooksAdapter.OnClickListener{
             pages += 1
             binding.numPage.text = pages.toString()
             binding.leftArrow.isVisible = startIndex >= 10
-            callService(querySave,startIndex, maxResults)
+            callService(querySave, startIndex, maxResults)
         }
         binding.leftArrow.setOnClickListener {
             startIndex -= 10;maxResults -= 10
             pages -= 1
             binding.numPage.text = pages.toString()
             binding.leftArrow.isVisible = startIndex > 10
-            callService(querySave,startIndex, maxResults)
+            callService(querySave, startIndex, maxResults)
         }
     }
 
@@ -107,7 +107,9 @@ class BooksFragment : Fragment(), ListBooksAdapter.OnClickListener{
                     dataModel.canonicalVolumeLink =
                         response.items[i].volumeInfo?.canonicalVolumeLink
                     dataModel.infoLink = response.items[i].volumeInfo?.infoLink
-                    dataModel.previewLink = response.items[i].volumeInfo?.previewLink
+                    dataModel.subtitle = response.items[i].volumeInfo?.subtitle
+                    dataModel.publisher = response.items[i].volumeInfo?.publisher
+                    dataModel.publishedDate = response.items[i].volumeInfo?.publishedDate
                     list.add(dataModel)
                     listArrayResponse = list
                     listaBooks = listArrayResponse
@@ -118,7 +120,7 @@ class BooksFragment : Fragment(), ListBooksAdapter.OnClickListener{
     }
 
     private fun setDataKardex(listaUsuarios: ArrayList<BooksInfo>) {
-        binding.listBooks.adapter = ListBooksAdapter(listaUsuarios,viewLifecycleOwner, this)
+        binding.listBooks.adapter = ListBooksAdapter(listaUsuarios, viewLifecycleOwner, this)
     }
 
     private fun statusObserve() {
@@ -148,8 +150,16 @@ class BooksFragment : Fragment(), ListBooksAdapter.OnClickListener{
         bookMainViewModel.status.value = null
         binding.progressIndicator.isVisible = false
     }
+
     override fun onClick(item: BooksInfo, position: Int, cardviewlista: MaterialCardView) {
-        item.description?.let { Utilities().showBottomSheetDialog(requireContext(),it) }
+        Utilities().showBottomSheetDialog(
+            requireContext(),
+            item.title,
+            item.subtitle,
+            item.authors,
+            item.description,
+            item.smallThumbnail
+        )
     }
 
 }
