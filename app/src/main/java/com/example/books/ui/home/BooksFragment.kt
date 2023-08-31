@@ -12,8 +12,9 @@ import androidx.fragment.app.viewModels
 import com.example.books.core.ApiResponceStatus
 import com.example.books.databinding.FragmentBooksBinding
 import com.example.books.ui.home.vm.MainViewModel
+import com.google.android.material.card.MaterialCardView
 
-class BooksFragment : Fragment() {
+class BooksFragment : Fragment(), ListBooksAdapter.OnClickListener{
 
     private lateinit var binding: FragmentBooksBinding
     private val bookMainViewModel: MainViewModel by viewModels()
@@ -113,7 +114,7 @@ class BooksFragment : Fragment() {
     }
 
     private fun setDataKardex(listaUsuarios: ArrayList<BooksInfo>) {
-        binding.listBooks.adapter = ListBooksAdapter(listaUsuarios)
+        binding.listBooks.adapter = ListBooksAdapter(listaUsuarios,viewLifecycleOwner, this)
     }
 
     private fun statusObserve() {
@@ -142,6 +143,10 @@ class BooksFragment : Fragment() {
         bookMainViewModel.status.removeObservers(viewLifecycleOwner)
         bookMainViewModel.status.value = null
         binding.progressIndicator.isVisible = false
+    }
+
+    override fun onClick(item: BooksInfo, position: Int, cardviewlista: MaterialCardView) {
+        println("Descripcion " + item.description)
     }
 
 }

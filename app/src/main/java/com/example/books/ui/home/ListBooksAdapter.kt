@@ -4,28 +4,44 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.books.R
 import com.example.books.core.ViewHolderGeneral
 import com.example.books.databinding.ListBooksBinding
+import com.google.android.material.card.MaterialCardView
 import com.squareup.picasso.Picasso
 
 class ListBooksAdapter
-    (private val item: List<BooksInfo>) : RecyclerView.Adapter<ViewHolderGeneral<*>>() {
+    (
+    private val item: List<BooksInfo>, private val lifecycleOwner: LifecycleOwner,
+    private val itemClickListener: OnClickListener,
+) : RecyclerView.Adapter<ViewHolderGeneral<*>>() {
     companion object {
         var bookSelect = MutableLiveData<List<Long>>()
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderGeneral<*> {
-        val itemBinding = ListBooksBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        return ViewHolder(itemBinding, parent.context)
+
+    interface OnClickListener {
+        fun onClick(item: BooksInfo, position: Int, cardviewlista: MaterialCardView)
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderGeneral<*> {
+        val itemBinding =
+            ListBooksBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val itemholder = ViewHolder(itemBinding, parent.context)
+        itemBinding.root.setOnClickListener {
+            val position =
+                itemholder.bindingAdapterPosition.takeIf { it != DiffUtil.DiffResult.NO_POSITION }
+                    ?: return@setOnClickListener
+            itemClickListener.onClick(item[position], position, itemBinding.root)
+        }
+        return itemholder
+    }
+
     override fun onBindViewHolder(holder: ViewHolderGeneral<*>, position: Int) {
         val animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.fade_in)
         animation.duration = 500
@@ -34,14 +50,18 @@ class ListBooksAdapter
             is ViewHolder -> holder.bind(item[position])
         }
     }
+
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
+
     override fun getItemViewType(position: Int): Int {
         return position
     }
+
     override fun getItemCount(): Int = item.size
-    private inner class ViewHolder(val binding: ListBooksBinding, val context: Context) : ViewHolderGeneral<BooksInfo>(binding.root) {
+    private inner class ViewHolder(val binding: ListBooksBinding, val context: Context) :
+        ViewHolderGeneral<BooksInfo>(binding.root) {
         override fun bind(item: BooksInfo) {
             val autor = item.authors.toString().replace("[", "").replace("]", "")
             val titulo = item.title
