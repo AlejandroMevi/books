@@ -11,8 +11,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.books.R
 import com.example.books.ui.home.activity.MainActivity
+import com.example.books.ui.home.fragments.favorites.BooksFav
 import com.example.books.ui.home.fragments.webView.WebViewFragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class Utilities {
 
@@ -68,6 +71,7 @@ class Utilities {
                 .into(imageView)
         }
         buttonLink?.setOnClickListener {
+            println(link)
             val bundle = Bundle()
             bundle.putString(Constants.URL, link)
             Utilities().loadFragmentBundel(activity, WebViewFragment(), "WebView", bundle)
@@ -76,5 +80,15 @@ class Utilities {
 
 
         bottomSheetDialog.show()
+    }
+
+    fun convertirAJson(libros: ArrayList<BooksFav>): String {
+        val gson = Gson()
+        return gson.toJson(libros)
+    }
+    fun convertirDesdeJson(json: String): ArrayList<BooksFav> {
+        val gson = Gson()
+        val tipoLista = object : TypeToken<ArrayList<BooksFav>>() {}.type
+        return gson.fromJson(json, tipoLista)
     }
 }

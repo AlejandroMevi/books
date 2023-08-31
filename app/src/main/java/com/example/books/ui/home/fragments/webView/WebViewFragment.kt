@@ -40,7 +40,8 @@ class WebViewFragment : Fragment() {
 
         webView.settings.javaScriptEnabled = true
 
-        webView.loadUrl(url)
+        val urlModified = url.replace("http://", "https://")
+        webView.loadUrl(urlModified)
 
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
