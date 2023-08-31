@@ -1,4 +1,4 @@
-package com.example.books.ui.home.fragments.Books
+package com.example.books.ui.home.fragments.favorites
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,28 +13,28 @@ import com.example.books.R
 import com.example.books.core.Utilities
 import com.example.books.core.ViewHolderGeneral
 import com.example.books.databinding.ListBooksBinding
+import com.example.books.databinding.ListBooksFavsBinding
 import com.example.books.ui.home.fragments.Books.data.BooksInfo
 import com.example.books.ui.home.fragments.favorites.BooksFav
 import com.google.android.material.card.MaterialCardView
 import com.google.gson.Gson
 
-class ListBooksAdapter
+class ListBooksFavsAdapter
     (
-    private val item: List<BooksInfo>, private val lifecycleOwner: LifecycleOwner,
+    private val item: List<BooksFav>, private val lifecycleOwner: LifecycleOwner,
     private val itemClickListener: OnClickListener,
 ) : RecyclerView.Adapter<ViewHolderGeneral<*>>() {
     companion object {
         val bookSelectFav = ArrayList<BooksFav>()
-
     }
 
     interface OnClickListener {
-        fun onClick(item: BooksInfo, position: Int, cardviewlista: MaterialCardView)
+        fun onClick(item: BooksFav, position: Int, cardviewlista: MaterialCardView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderGeneral<*> {
         val itemBinding =
-            ListBooksBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ListBooksFavsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val itemholder = ViewHolder(itemBinding, parent.context)
         itemBinding.root.setOnClickListener {
             val position =
@@ -63,65 +63,22 @@ class ListBooksAdapter
     }
 
     override fun getItemCount(): Int = item.size
-    private inner class ViewHolder(val binding: ListBooksBinding, val context: Context) :
-        ViewHolderGeneral<BooksInfo>(binding.root) {
-        override fun bind(item: BooksInfo) {
+    private inner class ViewHolder(val binding: ListBooksFavsBinding, val context: Context) :
+        ViewHolderGeneral<BooksFav>(binding.root) {
+        override fun bind(item: BooksFav) {
             val autor = item.authors.toString().replace("[", "").replace("]", "")
             val titulo = item.title
-            val imageSmall = item.smallThumbnail
+            val imageSmall = item.thumbnail
             var isFilled = false
             binding.titleBook.text = titulo
-            binding.titleAutor.text = autor
             val httpsUrl = imageSmall?.replace("http://", "https://")
             val imageView = binding.imageBook
-
             Glide.with(context)
                 .load(httpsUrl)
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView)
-
-            binding.iconButton.setOnClickListener {
-
-                if (isFilled) {
-                    binding.iconButton.setIconResource(R.drawable.ic_favorite_border)
-
-                    val dataModel = BooksFav()
-                    dataModel.title = titulo
-                    dataModel.authors = autor
-                    dataModel.thumbnail = imageSmall
-                    dataModel.link = item.infoLink
-                    bookSelectFav.contains(dataModel)
-                    bookSelectFav.remove(dataModel)
-                    val gson = Gson()
-                    val arrayListJson = gson.toJson(dataModel)
-                    val sharedPreferences = context.getSharedPreferences("MiSharedPreferences", Context.MODE_PRIVATE)
-                    val editor = sharedPreferences.edit()
-                    editor.putString("miArrayListKey", arrayListJson)
-                    editor.apply()
-                } else {
-                    binding.iconButton.setIconResource(R.drawable.ic_favorite_)
-                    if (titulo != null) {
-                        val dataModel = BooksFav()
-                        dataModel.title = titulo
-                        dataModel.authors = autor
-                        dataModel.thumbnail = imageSmall
-                        dataModel.link = item.infoLink
-                        bookSelectFav.add(dataModel)
-                        val sharedPreferences =
-                            context.getSharedPreferences("mi_pref", Context.MODE_PRIVATE)
-                        val librosSeleccionados: ArrayList<BooksFav> = bookSelectFav
-                        val librosSeleccionadosJson = Utilities().convertirAJson(librosSeleccionados)
-                        val editor = sharedPreferences.edit()
-                        editor.putString("libros_seleccionados", librosSeleccionadosJson)
-                        editor.apply()
-                    }
-                }
-                isFilled = !isFilled
-
-                println("Seleccionados : $bookSelectFav")
-            }
         }
     }
 }
