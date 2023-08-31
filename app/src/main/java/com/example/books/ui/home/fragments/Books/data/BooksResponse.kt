@@ -1,4 +1,4 @@
-package com.example.books.ui.home.data
+package com.example.books.ui.home.fragments.Books.data
 
 data class BooksResponse(
     val kind: String? = null,

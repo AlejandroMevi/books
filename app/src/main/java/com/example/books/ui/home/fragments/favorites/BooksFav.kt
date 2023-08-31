@@ -1,4 +1,4 @@
-package com.example.books.ui.home
+package com.example.books.ui.home.fragments.favorites
 
 data class BooksFav(
     var title: String? = null,

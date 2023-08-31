@@ -1,4 +1,4 @@
-package com.example.books.ui.home
+package com.example.books.ui.home.fragments.favorites
 
 import android.content.Context
 import android.os.Bundle
@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.books.R
 import com.example.books.databinding.FragmentFavBinding
-import com.google.gson.Gson
 
 class FavFragment : Fragment() {
 

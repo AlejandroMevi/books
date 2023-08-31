@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.books.R
-import com.example.books.ui.home.MainActivity
-import com.example.books.ui.home.WebViewFragment
+import com.example.books.ui.home.activity.MainActivity
+import com.example.books.ui.home.fragments.webView.WebViewFragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class Utilities {

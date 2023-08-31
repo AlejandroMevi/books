@@ -1,4 +1,4 @@
-package com.example.books.ui.home
+package com.example.books.ui.home.fragments.Books.data
 
 data class BooksInfo(
     var id: String? = null,

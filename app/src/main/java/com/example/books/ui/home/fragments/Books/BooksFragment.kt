@@ -1,10 +1,9 @@
-package com.example.books.ui.home
+package com.example.books.ui.home.fragments.Books
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -13,8 +12,8 @@ import androidx.fragment.app.viewModels
 import com.example.books.core.ApiResponceStatus
 import com.example.books.core.Utilities
 import com.example.books.databinding.FragmentBooksBinding
-import com.example.books.ui.home.vm.MainViewModel
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.example.books.ui.home.fragments.Books.data.BooksInfo
+import com.example.books.ui.home.fragments.Books.vm.MainViewModel
 import com.google.android.material.card.MaterialCardView
 
 

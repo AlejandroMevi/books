@@ -1,11 +1,10 @@
-package com.example.books.ui.home
+package com.example.books.ui.home.fragments.Books
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -13,9 +12,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.books.R
 import com.example.books.core.ViewHolderGeneral
 import com.example.books.databinding.ListBooksBinding
+import com.example.books.ui.home.fragments.Books.data.BooksInfo
+import com.example.books.ui.home.fragments.favorites.BooksFav
 import com.google.android.material.card.MaterialCardView
-import com.google.gson.Gson
-import com.squareup.picasso.Picasso
 
 class ListBooksAdapter
     (

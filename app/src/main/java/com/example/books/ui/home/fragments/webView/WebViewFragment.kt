@@ -1,4 +1,4 @@
-package com.example.books.ui.home
+package com.example.books.ui.home.fragments.webView
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.example.books.R
 import com.example.books.core.Constants
 import com.example.books.databinding.FragmentWebViewBinding
 

@@ -1,11 +1,11 @@
-package com.example.books.ui.home.vm
+package com.example.books.ui.home.fragments.Books.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.books.core.ApiResponceStatus
-import com.example.books.ui.home.data.BooksResponse
-import com.example.books.ui.home.data.BooksService
+import com.example.books.ui.home.fragments.Books.data.BooksResponse
+import com.example.books.ui.home.fragments.Books.data.BooksService
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
