@@ -153,12 +153,14 @@ class BooksFragment : Fragment(), ListBooksAdapter.OnClickListener {
 
     override fun onClick(item: BooksInfo, position: Int, cardviewlista: MaterialCardView) {
         Utilities().showBottomSheetDialog(
+            requireActivity(),
             requireContext(),
             item.title,
             item.subtitle,
             item.authors,
             item.description,
-            item.smallThumbnail
+            item.smallThumbnail,
+            item.infoLink
         )
     }
 
