@@ -14,6 +14,7 @@ import com.example.books.R
 import com.example.books.core.ViewHolderGeneral
 import com.example.books.databinding.ListBooksBinding
 import com.google.android.material.card.MaterialCardView
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 
 class ListBooksAdapter
@@ -22,7 +23,8 @@ class ListBooksAdapter
     private val itemClickListener: OnClickListener,
 ) : RecyclerView.Adapter<ViewHolderGeneral<*>>() {
     companion object {
-        var bookSelect = MutableLiveData<List<Long>>()
+        val bookSelectFav = ArrayList<BooksFav>()
+
     }
 
     interface OnClickListener {
@@ -66,6 +68,7 @@ class ListBooksAdapter
             val autor = item.authors.toString().replace("[", "").replace("]", "")
             val titulo = item.title
             val imageSmall = item.smallThumbnail
+            var isFilled = false
             binding.titleBook.text = titulo
             binding.titleAutor.text = autor
             val httpsUrl = imageSmall?.replace("http://", "https://")
@@ -78,17 +81,37 @@ class ListBooksAdapter
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView)
 
-            /*
-            binding.cbAutorizar.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    solicitudesSelect.add(item.grupo.toString().toLong())
+            binding.iconButton.setOnClickListener {
+
+                if (isFilled) {
+                    binding.iconButton.setIconResource(R.drawable.ic_favorite_border)
+                    /*
+                    val dataModel = BooksFav()
+                    dataModel.title = titulo
+                    dataModel.authors = autor
+                    dataModel.thumbnail = imageSmall
+                    dataModel.link = item.infoLink
+                    bookSelectFav.contains(dataModel)
+                    bookSelectFav.remove(dataModel)
+                    val gson = Gson()
+                    val arrayListJson = gson.toJson(dataModel)
+                    val sharedPreferences = context.getSharedPreferences("MiSharedPreferences", Context.MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+                    editor.putString("miArrayListKey", arrayListJson)
+                    editor.apply()*/
                 } else {
-                    if (solicitudesSelect.contains(item.grupo.toString().toLong())) {
-                        solicitudesSelect.remove(item.grupo.toString().toLong())
+                    binding.iconButton.setIconResource(R.drawable.ic_favorite_)
+                    if (titulo != null) {
+                        val sharedPreferences = context.getSharedPreferences("MiSharedPreferences", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putString("miArrayListKey", item.smallThumbnail)
+                        editor.apply()
                     }
                 }
-                listSolicitudSelect.value = solicitudesSelect
-            }*/
+                isFilled = !isFilled
+
+                println("Seleccionados : $bookSelectFav")
+            }
         }
     }
 }

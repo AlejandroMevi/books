@@ -40,4 +40,9 @@
         <item name="android:layout_marginTop">10dp</item>
         <item name="hintTextColor">@color/principal</item>
     </style>
+
+    <style name="RoundedButton">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>
