@@ -1,18 +1,22 @@
 package com.example.books.ui.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.books.core.ApiResponceStatus
+import com.example.books.core.Utilities
 import com.example.books.databinding.FragmentBooksBinding
 import com.example.books.ui.home.vm.MainViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.card.MaterialCardView
+
 
 class BooksFragment : Fragment(), ListBooksAdapter.OnClickListener{
 
@@ -71,7 +75,7 @@ class BooksFragment : Fragment(), ListBooksAdapter.OnClickListener{
     }
 
     private fun searchBook() {
-        binding.etFilter.doOnTextChanged { text, start, before, count ->
+        binding.etFilter.doOnTextChanged { text, _, _, _ ->
             if (!text.isNullOrEmpty()) {
                 querySave = text.toString()
                 callService(querySave, startIndex, maxResults)
@@ -144,9 +148,8 @@ class BooksFragment : Fragment(), ListBooksAdapter.OnClickListener{
         bookMainViewModel.status.value = null
         binding.progressIndicator.isVisible = false
     }
-
     override fun onClick(item: BooksInfo, position: Int, cardviewlista: MaterialCardView) {
-        println("Descripcion " + item.description)
+        item.description?.let { Utilities().showBottomSheetDialog(requireContext(),it) }
     }
 
 }
