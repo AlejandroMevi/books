@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageBook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_extra_large"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title_book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_extra_large"
+            android:layout_marginVertical="@dimen/margin_small"
+            android:text="Titulo"
+            android:textSize="@dimen/text_title"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageBook" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/subtitle_book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_extra_large"
+            android:layout_marginVertical="@dimen/margin_small"
+            android:text="Subtitulo"
+            android:textSize="@dimen/text_title"
+            android:textStyle=""
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_book" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/autor_book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_extra_large"
+            android:layout_marginVertical="@dimen/margin_small"
+            android:text="Autor"
+            android:textSize="@dimen/text_subtitle"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/subtitle_book" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/description_book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_extra_large"
+            android:layout_marginVertical="@dimen/margin_small"
+            android:text="Descripcion"
+            android:textSize="@dimen/text_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/autor_book" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            android:text="@string/link"
+            app:icon="@drawable/ic_link"
+            app:iconSize="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_book" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card"
     style="@style/ListabooksCardView"
     android:layout_margin="@dimen/margin_normal"
@@ -13,11 +14,12 @@
         android:layout_margin="@dimen/margin_normal">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/iconButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -26,23 +28,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_normal"
-                android:src="@drawable/ic_launcher_background"/>
+                android:src="@drawable/ic_launcher_background" />
 
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_normal"
                 android:layout_gravity="center"
+                android:layout_margin="@dimen/margin_normal"
                 android:orientation="vertical">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/title_book"
                     style="@style/TextHeader"
                     android:layout_width="wrap_content"
+                    android:layout_margin="@dimen/margin_small"
                     android:text="titulo"
                     android:textSize="@dimen/text_title"
-                    android:layout_margin="@dimen/margin_small"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -51,14 +53,25 @@
                     android:id="@+id/title_autor"
                     style="@style/TextHeader"
                     android:layout_width="wrap_content"
-                    android:textSize="@dimen/text_body"
                     android:layout_margin="@dimen/margin_small"
                     android:text="Autor"
+                    android:textSize="@dimen/text_body"
                     app:layout_constraintStart_toStartOf="parent" />
             </LinearLayout>
 
         </LinearLayout>
 
+
+        <com.google.android.material.button.MaterialButton
+            style="?attr/materialIconButtonFilledTonalStyle"
+            android:id="@+id/iconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            app:icon="@drawable/ic_favorite_border"
+            app:shapeAppearance="@style/RoundedButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,4 +1,4 @@
-package com.example.books.ui.home.data
+package com.example.books.ui.home.fragments.Books.data
 
 import retrofit2.http.GET
 import retrofit2.http.Headers

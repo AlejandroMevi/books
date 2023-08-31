@@ -1,25 +1,31 @@
-package com.example.books.ui.home
+package com.example.books.ui.home.fragments.Books
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.books.core.ApiResponceStatus
+import com.example.books.core.Utilities
 import com.example.books.databinding.FragmentBooksBinding
-import com.example.books.ui.home.vm.MainViewModel
+import com.example.books.ui.home.fragments.Books.data.BooksInfo
+import com.example.books.ui.home.fragments.Books.vm.MainViewModel
+import com.google.android.material.card.MaterialCardView
 
-class BooksFragment : Fragment() {
+
+class BooksFragment : Fragment(), ListBooksAdapter.OnClickListener {
 
     private lateinit var binding: FragmentBooksBinding
     private val bookMainViewModel: MainViewModel by viewModels()
     private lateinit var listaBooks: ArrayList<BooksInfo>
-    private var startIndex = 0
-    private var maxResults = 10
-    private var pages = 1
+    private var startIndex: Int = 0
+    private var maxResults: Int = 10
+    private var pages: Int = 1
+    private var querySave: String = "a"
 
 
     companion object {
@@ -36,9 +42,10 @@ class BooksFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentBooksBinding.inflate(inflater, container, false)
-        callService(startIndex, maxResults)
+        callService(querySave, startIndex, maxResults)
         initiView()
         buttons()
+        searchBook()
         return binding.root
     }
 
@@ -55,20 +62,32 @@ class BooksFragment : Fragment() {
             pages += 1
             binding.numPage.text = pages.toString()
             binding.leftArrow.isVisible = startIndex >= 10
-            callService(startIndex, maxResults)
+            callService(querySave, startIndex, maxResults)
         }
         binding.leftArrow.setOnClickListener {
             startIndex -= 10;maxResults -= 10
             pages -= 1
             binding.numPage.text = pages.toString()
             binding.leftArrow.isVisible = startIndex > 10
-            callService(startIndex, maxResults)
+            callService(querySave, startIndex, maxResults)
         }
     }
 
-    private fun callService(startIndex: Int, maxResults: Int) {
+    private fun searchBook() {
+        binding.etFilter.doOnTextChanged { text, _, _, _ ->
+            if (!text.isNullOrEmpty()) {
+                querySave = text.toString()
+                callService(querySave, startIndex, maxResults)
+            } else {
+                querySave = "a"
+                callService(querySave, startIndex, maxResults)
+            }
+        }
+    }
+
+    private fun callService(query: String, startIndex: Int, maxResults: Int) {
         bookMainViewModel.data.value = null
-        bookMainViewModel.getBooks("a", startIndex, maxResults)
+        bookMainViewModel.getBooks(query, startIndex, maxResults)
         statusObserve()
         bookMainViewModel.data.observe(viewLifecycleOwner) { response ->
             if (response != null) {
@@ -81,11 +100,15 @@ class BooksFragment : Fragment() {
                     dataModel.title = response.items[i].volumeInfo?.title
                     dataModel.authors = response.items[i].volumeInfo?.authors
                     dataModel.description = response.items[i].volumeInfo?.description
-                    dataModel.smallThumbnail = response.items[i].volumeInfo?.imageLinks?.smallThumbnail
+                    dataModel.smallThumbnail =
+                        response.items[i].volumeInfo?.imageLinks?.smallThumbnail
                     dataModel.thumbnail = response.items[i].volumeInfo?.imageLinks?.thumbnail
-                    dataModel.canonicalVolumeLink = response.items[i].volumeInfo?.canonicalVolumeLink
+                    dataModel.canonicalVolumeLink =
+                        response.items[i].volumeInfo?.canonicalVolumeLink
                     dataModel.infoLink = response.items[i].volumeInfo?.infoLink
-                    dataModel.previewLink = response.items[i].volumeInfo?.previewLink
+                    dataModel.subtitle = response.items[i].volumeInfo?.subtitle
+                    dataModel.publisher = response.items[i].volumeInfo?.publisher
+                    dataModel.publishedDate = response.items[i].volumeInfo?.publishedDate
                     list.add(dataModel)
                     listArrayResponse = list
                     listaBooks = listArrayResponse
@@ -96,7 +119,7 @@ class BooksFragment : Fragment() {
     }
 
     private fun setDataKardex(listaUsuarios: ArrayList<BooksInfo>) {
-        binding.listBooks.adapter = ListBooksAdapter(listaUsuarios)
+        binding.listBooks.adapter = ListBooksAdapter(listaUsuarios, viewLifecycleOwner, this)
     }
 
     private fun statusObserve() {
@@ -125,6 +148,19 @@ class BooksFragment : Fragment() {
         bookMainViewModel.status.removeObservers(viewLifecycleOwner)
         bookMainViewModel.status.value = null
         binding.progressIndicator.isVisible = false
+    }
+
+    override fun onClick(item: BooksInfo, position: Int, cardviewlista: MaterialCardView) {
+        Utilities().showBottomSheetDialog(
+            requireActivity(),
+            requireContext(),
+            item.title,
+            item.subtitle,
+            item.authors,
+            item.description,
+            item.smallThumbnail,
+            item.infoLink
+        )
     }
 
 }

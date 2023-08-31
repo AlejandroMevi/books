@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Books"
         tools:targetApi="tiramisu">
         <activity
-            android:name=".ui.home.MainActivity"
+            android:name=".ui.home.activity.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait" >
             <intent-filter>

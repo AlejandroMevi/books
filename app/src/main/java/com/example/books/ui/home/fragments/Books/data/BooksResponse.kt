@@ -1,4 +1,4 @@
-package com.example.books.ui.home.data
+package com.example.books.ui.home.fragments.Books.data
 
 data class BooksResponse(
     val kind: String? = null,
@@ -13,6 +13,9 @@ data class BookItem(
 
 data class VolumeInfo(
     val title: String? = null,
+    val subtitle: String? = null,
+    val publisher: String? = null,
+    val publishedDate: String? = null,
     val authors: List<String>? = null,
     val description: String? = null,
     val imageLinks: ImageLinks? = null,
