@@ -68,6 +68,7 @@ class ListBooksAdapter
         override fun bind(item: BooksInfo) {
             val autor = item.authors.toString().replace("[", "").replace("]", "")
             val titulo = item.title
+            val descripcion = item.description
             val imageSmall = item.smallThumbnail
             var isFilled = false
             binding.titleBook.text = titulo
@@ -91,6 +92,8 @@ class ListBooksAdapter
                     dataModel.title = titulo
                     dataModel.authors = autor
                     dataModel.thumbnail = imageSmall
+                    dataModel.thumbnail = imageSmall
+                    dataModel.description = descripcion
                     dataModel.link = item.infoLink
                     bookSelectFav.contains(dataModel)
                     bookSelectFav.remove(dataModel)
@@ -112,6 +115,7 @@ class ListBooksAdapter
                         dataModel.title = titulo
                         dataModel.authors = autor
                         dataModel.thumbnail = imageSmall
+                        dataModel.description = descripcion
                         dataModel.link = item.infoLink
                         bookSelectFav.add(dataModel)
                         val librosSeleccionados: ArrayList<BooksFav> = bookSelectFav

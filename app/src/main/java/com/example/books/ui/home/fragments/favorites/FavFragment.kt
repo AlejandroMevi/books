@@ -70,6 +70,7 @@ class FavFragment : Fragment(), ListBooksFavsAdapter.OnClickListener {
                 dataModel.title = librosSeleccionados[i].title
                 dataModel.authors = librosSeleccionados[i].authors
                 dataModel.thumbnail = librosSeleccionados[i].thumbnail
+                dataModel.description = librosSeleccionados[i].description
                 dataModel.link = librosSeleccionados[i].link
                 list.add(dataModel)
                 listArrayBooksFav = list
@@ -93,7 +94,7 @@ class FavFragment : Fragment(), ListBooksFavsAdapter.OnClickListener {
             item.title,
             item.authors,
             null,
-            null,
+            item.description,
             item.thumbnail,
             item.link
         )
