@@ -96,31 +96,31 @@ class ListBooksAdapter
                     bookSelectFav.remove(dataModel)
                     val gson = Gson()
                     val arrayListJson = gson.toJson(dataModel)
-                    val sharedPreferences = context.getSharedPreferences("MiSharedPreferences", Context.MODE_PRIVATE)
+                    val sharedPreferences = context.getSharedPreferences("mi_pref", Context.MODE_PRIVATE)
                     val editor = sharedPreferences.edit()
+                    editor.clear()
                     editor.putString("miArrayListKey", arrayListJson)
                     editor.apply()
                 } else {
                     binding.iconButton.setIconResource(R.drawable.ic_favorite_)
                     if (titulo != null) {
+                        val sharedPreferences =
+                            context.getSharedPreferences("mi_pref", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.clear()
                         val dataModel = BooksFav()
                         dataModel.title = titulo
                         dataModel.authors = autor
                         dataModel.thumbnail = imageSmall
                         dataModel.link = item.infoLink
                         bookSelectFav.add(dataModel)
-                        val sharedPreferences =
-                            context.getSharedPreferences("mi_pref", Context.MODE_PRIVATE)
                         val librosSeleccionados: ArrayList<BooksFav> = bookSelectFav
                         val librosSeleccionadosJson = Utilities().convertirAJson(librosSeleccionados)
-                        val editor = sharedPreferences.edit()
                         editor.putString("libros_seleccionados", librosSeleccionadosJson)
                         editor.apply()
                     }
                 }
                 isFilled = !isFilled
-
-                println("Seleccionados : $bookSelectFav")
             }
         }
     }

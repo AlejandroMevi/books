@@ -71,6 +71,7 @@ class Utilities {
                 .into(imageView)
         }
         buttonLink?.setOnClickListener {
+            println(link)
             val bundle = Bundle()
             bundle.putString(Constants.URL, link)
             Utilities().loadFragmentBundel(activity, WebViewFragment(), "WebView", bundle)

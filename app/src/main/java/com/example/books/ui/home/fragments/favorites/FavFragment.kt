@@ -6,15 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.books.R
 import com.example.books.core.Utilities
 import com.example.books.databinding.FragmentFavBinding
+import com.example.books.ui.home.fragments.Books.BooksFragment
 import com.google.android.material.card.MaterialCardView
 
 class FavFragment : Fragment(), ListBooksFavsAdapter.OnClickListener {
 
     private lateinit var binding: FragmentFavBinding
     private lateinit var listaBooks: ArrayList<BooksFav>
-    private var imagen : String? = null
 
     companion object {
         lateinit var listArrayBooksFav: ArrayList<BooksFav>
@@ -30,10 +31,30 @@ class FavFragment : Fragment(), ListBooksFavsAdapter.OnClickListener {
         // Inflate the layout for this fragment
         binding = FragmentFavBinding.inflate(inflater, container, false)
         loadSharedPreference()
+        initButon()
         return binding.root
     }
 
+    private fun initButon(){
+        with(binding){
+            topAppBar.setNavigationOnClickListener {
+                Utilities().loadFragment(requireActivity(), BooksFragment(), "Books")
+            }
 
+            topAppBar.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.delete -> {
+                        val sharedPreferences =
+                            requireContext().getSharedPreferences("libros_seleccionados", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.clear()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }
+    }
     private fun loadSharedPreference() {
         val sharedPreferences = requireActivity().getSharedPreferences("mi_pref", Context.MODE_PRIVATE)
         val librosSeleccionadosJson = sharedPreferences.getString("libros_seleccionados", "")
@@ -44,8 +65,8 @@ class FavFragment : Fragment(), ListBooksFavsAdapter.OnClickListener {
                 val dataModel = BooksFav()
                 dataModel.title = librosSeleccionados[i].title
                 dataModel.authors = librosSeleccionados[i].authors
-
                 dataModel.thumbnail = librosSeleccionados[i].thumbnail
+                dataModel.link = librosSeleccionados[i].link
                 list.add(dataModel)
                 listArrayBooksFav = list
                 listaBooks = list
@@ -58,7 +79,17 @@ class FavFragment : Fragment(), ListBooksFavsAdapter.OnClickListener {
     }
 
     override fun onClick(item: BooksFav, position: Int, cardviewlista: MaterialCardView) {
-        TODO("Not yet implemented")
+        Utilities().showBottomSheetDialog(
+            requireActivity(),
+            requireContext(),
+            item.title,
+            item.authors,
+            null,
+            null,
+            item.thumbnail,
+            item.link
+        )
     }
+
 
 }
