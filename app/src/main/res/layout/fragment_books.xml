@@ -7,16 +7,37 @@
     android:background="@color/white"
     tools:context=".ui.home.BooksFragment">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/searchTextField"
+        style="@style/InputLayout"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="10dp"
+        app:endIconDrawable="@drawable/ic_search"
+        app:endIconMode="custom"
+        app:endIconTint="@color/principal"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Buscar libro"
+            android:inputType="textFilter" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/progressIndicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:indicatorColor="@color/progress"
         android:indeterminate="true"
         android:visibility="gone"
+        app:indicatorColor="@color/progress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/searchTextField" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listBooks"
@@ -26,7 +47,7 @@
         app:layout_constraintBottom_toTopOf="@+id/pages"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressIndicator"
         tools:listitem="@layout/list_books" />
 
     <LinearLayout
@@ -53,11 +74,11 @@
             android:id="@+id/numPage"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:background="@drawable/bacground_border_redon"
-            android:textColor="@color/white"
-            android:gravity="center"
             android:layout_marginHorizontal="@dimen/margin_extra_large"
-            android:text="1" />
+            android:background="@drawable/bacground_border_redon"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/white" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/rightArrow"

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import com.example.books.core.ApiResponceStatus
 import com.example.books.databinding.FragmentBooksBinding
@@ -17,9 +18,10 @@ class BooksFragment : Fragment() {
     private lateinit var binding: FragmentBooksBinding
     private val bookMainViewModel: MainViewModel by viewModels()
     private lateinit var listaBooks: ArrayList<BooksInfo>
-    private var startIndex = 0
-    private var maxResults = 10
-    private var pages = 1
+    private var startIndex: Int = 0
+    private var maxResults: Int = 10
+    private var pages: Int = 1
+    private var querySave: String = "a"
 
 
     companion object {
@@ -36,9 +38,10 @@ class BooksFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentBooksBinding.inflate(inflater, container, false)
-        callService(startIndex, maxResults)
+        callService(querySave,startIndex, maxResults)
         initiView()
         buttons()
+        searchBook()
         return binding.root
     }
 
@@ -55,20 +58,32 @@ class BooksFragment : Fragment() {
             pages += 1
             binding.numPage.text = pages.toString()
             binding.leftArrow.isVisible = startIndex >= 10
-            callService(startIndex, maxResults)
+            callService(querySave,startIndex, maxResults)
         }
         binding.leftArrow.setOnClickListener {
             startIndex -= 10;maxResults -= 10
             pages -= 1
             binding.numPage.text = pages.toString()
             binding.leftArrow.isVisible = startIndex > 10
-            callService(startIndex, maxResults)
+            callService(querySave,startIndex, maxResults)
         }
     }
 
-    private fun callService(startIndex: Int, maxResults: Int) {
+    private fun searchBook() {
+        binding.etFilter.doOnTextChanged { text, start, before, count ->
+            if (!text.isNullOrEmpty()) {
+                querySave = text.toString()
+                callService(querySave, startIndex, maxResults)
+            } else {
+                querySave = "a"
+                callService(querySave, startIndex, maxResults)
+            }
+        }
+    }
+
+    private fun callService(query: String, startIndex: Int, maxResults: Int) {
         bookMainViewModel.data.value = null
-        bookMainViewModel.getBooks("a", startIndex, maxResults)
+        bookMainViewModel.getBooks(query, startIndex, maxResults)
         statusObserve()
         bookMainViewModel.data.observe(viewLifecycleOwner) { response ->
             if (response != null) {
@@ -81,9 +96,11 @@ class BooksFragment : Fragment() {
                     dataModel.title = response.items[i].volumeInfo?.title
                     dataModel.authors = response.items[i].volumeInfo?.authors
                     dataModel.description = response.items[i].volumeInfo?.description
-                    dataModel.smallThumbnail = response.items[i].volumeInfo?.imageLinks?.smallThumbnail
+                    dataModel.smallThumbnail =
+                        response.items[i].volumeInfo?.imageLinks?.smallThumbnail
                     dataModel.thumbnail = response.items[i].volumeInfo?.imageLinks?.thumbnail
-                    dataModel.canonicalVolumeLink = response.items[i].volumeInfo?.canonicalVolumeLink
+                    dataModel.canonicalVolumeLink =
+                        response.items[i].volumeInfo?.canonicalVolumeLink
                     dataModel.infoLink = response.items[i].volumeInfo?.infoLink
                     dataModel.previewLink = response.items[i].volumeInfo?.previewLink
                     list.add(dataModel)

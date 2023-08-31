@@ -4,10 +4,10 @@ Crear un sistema para buscar libros disponibles en la API de Google Books
 
 Requisitos funcionales
 
-•	Como usuario, me gustaría poder ingresar algunas palabras y ver una lista de libros relacionados con mi búsqueda.
+•	REALIZADO Como usuario, me gustaría poder ingresar algunas palabras y ver una lista de libros relacionados con mi búsqueda.
 •	Como usuario, me gustaría poder hacer clic en uno de esos libros para ver en detalle las descripciones del libro.
 •	Como usuario, me gustaría poder marcar un libro como favorito para filtrarlos en el futuro.
-•	Como usuario, quiero utilizar un paginador para acceder al resto de los resultados.
+•	REALIZADO. Como usuario, quiero utilizar un paginador para acceder al resto de los resultados.
 •	Como usuario, me gustaría poder abrir el sitio en un dispositivo móvil sin comprometer la navegación del sitio.
 •	Como desarrollador, me gustaría realizar pruebas unitarias para garantizar la integridad de lo que se está desarrollando.
 
